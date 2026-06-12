@@ -69,6 +69,19 @@ Business Dashboard
 
 ---
 
+## Databricks Notebooks
+
+The project follows the Medallion Architecture pattern.
+
+| Notebook | Layer | Description |
+|-----------|---------|-------------|
+| 01_bronze_ingestion.py | Bronze | Raw ingestion from AWS S3 |
+| 02_silver_transformations.py | Silver | Data cleansing and enrichment |
+| 03_gold_kpis.py | Gold | Business KPI generation |
+| 04_dashboard_queries.sql | Dashboard | Queries used by Databricks Dashboard |
+
+---
+
 ## Dashboard
 
 ![Dashboard](docs/images/dashboard.png)
