@@ -293,7 +293,7 @@ Ranking of the most problematic ATMs.
 > Replace this image with your dashboard screenshot.
 
 ```markdown
-![Dashboard](images/dashboard.png)
+![Dashboard](doc/images/dashboard.png)
 ```
 
 ---
@@ -303,7 +303,7 @@ Ranking of the most problematic ATMs.
 > Replace this image with your Gold Layer screenshot.
 
 ```markdown
-![Gold Tables](images/gold_tables.png)
+![Gold Tables](doc/images/gold_tables.png)
 ```
 
 ---
@@ -313,7 +313,7 @@ Ranking of the most problematic ATMs.
 > Replace this image with your Airflow DAG screenshot.
 
 ```markdown
-![Airflow Pipeline](images/airflow_pipeline.png)
+![Airflow Pipeline](doc/images/airflow_pipeline.png)
 ```
 
 ---
@@ -323,7 +323,7 @@ Ranking of the most problematic ATMs.
 > Replace this image with your AWS S3 ingestion screenshot.
 
 ```markdown
-![S3 Ingestion](images/s3_ingestion.png)
+![S3 Ingestion](doc/images/s3_ingestion.png)
 ```
 
 ---
