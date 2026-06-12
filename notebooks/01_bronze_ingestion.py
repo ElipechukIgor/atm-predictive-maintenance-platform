@@ -1,6 +1,13 @@
-"""
-Bronze Layer
+# Bronze Layer
+# Kafka -> AWS S3 -> Databricks Bronze
 
-Reads ATM events from AWS S3
-and stores raw data in Delta Lake.
-"""
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.getOrCreate()
+
+df = spark.read.json("s3://atm-monitoring/raw/")
+
+df.write \
+    .format("delta") \
+    .mode("overwrite") \
+    .saveAsTable("atm_bronze")
