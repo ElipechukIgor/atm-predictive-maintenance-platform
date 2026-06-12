@@ -270,7 +270,7 @@ During this project, the following concepts were applied:
 Data Engineer | AWS | Databricks | PySpark | Kafka | Airflow
 
 LinkedIn:
-https://www.linkedin.com/in/SEU-LINKEDIN
+www.linkedin.com/in/igorelipechuk
 
 GitHub:
 https://github.com/ElipechukIgor
