@@ -1,0 +1,7 @@
+kafka-python
+pyspark
+delta-spark
+boto3
+apache-airflow
+pandas
+pyarrow
