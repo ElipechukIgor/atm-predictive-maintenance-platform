@@ -9,227 +9,92 @@
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
-The ATM Predictive Maintenance Platform is an end-to-end Data Engineering project that simulates a real-world banking environment for ATM monitoring and predictive maintenance.
+Real-time Data Engineering Platform for ATM monitoring and predictive maintenance.
 
-The platform continuously generates ATM telemetry events, streams them through Apache Kafka, orchestrates ingestion with Apache Airflow, stores raw data in AWS S3, and processes business-ready analytics using Databricks Lakehouse Architecture.
+This project simulates an enterprise-grade streaming architecture using Apache Kafka, Apache Airflow, AWS S3, Databricks and Delta Lake.
 
-This project demonstrates modern Data Engineering practices including:
-
-- Streaming Data Pipelines
-- Data Lakehouse Architecture
-- Cloud Data Storage
-- Workflow Orchestration
-- Data Quality
-- Bronze / Silver / Gold Layers
-- Business Analytics
+The platform ingests ATM telemetry events, stores them in AWS S3, orchestrates processing with Airflow and generates business-ready analytics in Databricks.
 
 ---
 
-## 🎯 Business Problem
+## Business Problem
 
-Banks operate thousands of ATMs distributed across multiple cities and states.
+Banks operate thousands of ATMs distributed across multiple cities.
 
-Unexpected ATM failures may result in:
+Unexpected ATM failures can result in:
 
 - Service interruptions
 - Customer dissatisfaction
-- Operational inefficiencies
 - Increased maintenance costs
-- Revenue loss
+- Operational inefficiencies
 
-This platform enables proactive monitoring and predictive maintenance by identifying operational anomalies before critical failures occur.
+This platform demonstrates how modern Data Engineering architectures can proactively identify ATM anomalies before critical failures occur.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```text
-ATM Telemetry Producer
-          │
-          ▼
-     Apache Kafka
-          │
-          ▼
-    Apache Airflow
-          │
-          ▼
-        AWS S3
-          │
-          ▼
-Databricks Bronze Layer
-          │
-          ▼
-Databricks Silver Layer
-          │
-          ▼
-Databricks Gold Layer
-          │
-          ▼
+ATM Producer
+      │
+      ▼
+Apache Kafka
+      │
+      ▼
+Apache Airflow
+      │
+      ▼
+AWS S3
+      │
+      ▼
+Databricks Bronze
+      │
+      ▼
+Databricks Silver
+      │
+      ▼
+Databricks Gold
+      │
+      ▼
 Business Dashboard
 ```
 
 ---
 
-## 📊 End-to-End Data Flow
+## Architecture Diagram
 
-### 1. Event Generation
-
-A Python Producer simulates ATM telemetry data including:
-
-- Temperature
-- CPU Usage
-- Cash Level
-- Network Latency
-- Operational Status
-- Event Timestamp
+![Architecture](docs/images/airflow_pipeline.png)
 
 ---
 
-### 2. Kafka Streaming
+## Dashboard
 
-Events are published to Kafka topics in real time.
-
-Examples:
-
-```json
-{
-  "atm_id": "ATM_1001",
-  "city": "Curitiba",
-  "state": "PR",
-  "temperature": 84,
-  "cpu_usage": 92,
-  "cash_level": 14,
-  "network_latency_ms": 250,
-  "status": "CRITICAL",
-  "event_time": "2026-06-07T23:18:00"
-}
-```
+![Dashboard](docs/images/dashboard.png)
 
 ---
 
-### 3. Airflow Orchestration
+## Gold Analytics Tables
 
-Apache Airflow orchestrates ingestion workflows and automates movement of streaming files into AWS S3.
-
----
-
-### 4. AWS S3 Landing Zone
-
-Raw telemetry data is stored in S3 as the system's landing zone.
-
-```text
-s3://atm-predictive-maintenance/
-│
-├── raw/
-├── processed/
-└── archive/
-```
+![Gold Tables](docs/images/gold_tables.png)
 
 ---
 
-### 5. Databricks Bronze Layer
+## S3 Data Ingestion
 
-Raw events are ingested into Delta tables.
-
-Responsibilities:
-
-- Schema capture
-- Raw data preservation
-- Historical storage
+![S3 Ingestion](docs/images/s3_ingestion.png)
 
 ---
 
-### 6. Databricks Silver Layer
-
-Data cleansing and enrichment.
-
-Responsibilities:
-
-- Data quality validation
-- Type conversions
-- Null handling
-- Feature engineering
-- Business rule enforcement
-
----
-
-### 7. Databricks Gold Layer
-
-Business-ready datasets.
-
-Generated tables:
-
-### atm_health_summary
-
-ATM-level operational metrics.
-
-### city_failure_summary
-
-Failure aggregation by city.
-
-### atm_critical_ranking
-
-Critical ATM ranking.
-
----
-
-## 📂 Repository Structure
-
-```text
-atm-predictive-maintenance-platform/
-│
-├── airflow/
-│   ├── dags/
-│   │   └── atm_airflow_s3_pipeline.py
-│   └── docker-compose.yml
-│
-├── consumer/
-│   └── 02_kafka_to_s3.py
-│
-├── producer/
-│   └── atm_producer.py
-│
-├── notebooks/
-│   ├── 01_bronze_ingestion.py
-│   ├── 02_silver_transformations.py
-│   ├── 03_gold_kpis.py
-│   └── 04_dashboard_queries.sql
-│
-├── datalake/
-│
-├── docs/
-│   ├── airflow_pipeline.md
-│   ├── dashboard.md
-│   ├── gold_tables.md
-│   └── s3_ingestion.md
-│
-├── images/
-│   ├── airflow_pipeline.png
-│   ├── dashboard.png
-│   ├── gold_tables.png
-│   └── s3_ingestion.png
-│
-├── infra/
-│   └── docker-compose.yml
-│
-├── requirements.txt
-├── .env.example
-├── .gitignore
-└── README.md
-```
-
----
-
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Streaming
 
 - Apache Kafka
 - Kafka Producer
 
-### Workflow Orchestration
+### Orchestration
 
 - Apache Airflow
 
@@ -247,20 +112,64 @@ atm-predictive-maintenance-platform/
 
 - Delta Lake
 
-### Programming
-
-- Python
-- SQL
-
 ### Analytics
 
+- SQL
 - Databricks Dashboards
 
 ---
 
-## 📈 Dashboard KPIs
+## Data Pipeline
 
-The Databricks dashboard provides operational visibility into ATM health metrics.
+### Bronze Layer
+
+Raw ATM telemetry ingestion.
+
+Examples:
+
+- temperature
+- cpu_usage
+- cash_level
+- network_latency_ms
+- status
+- event_time
+
+---
+
+### Silver Layer
+
+Data cleansing and enrichment.
+
+Transformations:
+
+- Schema enforcement
+- Data quality validation
+- Null handling
+- Business rule application
+
+---
+
+### Gold Layer
+
+Business-ready datasets.
+
+Generated tables:
+
+### atm_health_summary
+
+ATM operational metrics.
+
+### city_failure_summary
+
+Failure aggregation by city.
+
+### atm_critical_ranking
+
+Ranking of critical ATMs.
+
+---
+
+## Dashboard KPIs
 
 ### Total ATM Events
 
@@ -268,117 +177,75 @@ Total telemetry events processed.
 
 ### Failure Events
 
-Total ATM failures detected.
+Detected ATM failures.
 
 ### High Temperature Alerts
 
-ATMs operating above safe temperature thresholds.
+ATMs exceeding temperature thresholds.
 
 ### Low Cash Alerts
 
-ATMs requiring cash replenishment.
+ATMs requiring replenishment.
 
 ### Failures by City
 
-Failure distribution across cities.
+Operational failures aggregated by city.
 
 ### Top Critical ATMs
 
-Ranking of the most problematic ATMs.
+Ranking of ATMs with the highest failure rate.
 
 ---
 
-## 📷 Dashboard
+## Repository Structure
 
-> Replace this image with your dashboard screenshot.
-
-```markdown
-![Dashboard](doc/images/dashboard.png)
+```text
+atm-predictive-maintenance-platform/
+│
+├── airflow/
+│   ├── dags/
+│   │   └── atm_airflow_s3_pipeline.py
+│   └── docker-compose.yml
+│
+├── producer/
+│   └── atm_producer.py
+│
+├── consumer/
+│   └── 02_kafka_to_s3.py
+│
+├── notebooks/
+│   ├── 01_bronze_ingestion.py
+│   ├── 02_silver_transformations.py
+│   ├── 03_gold_kpis.py
+│   └── 04_dashboard_queries.sql
+│
+├── datalake/
+│
+├── docs/
+│   ├── airflow_pipeline.md
+│   ├── dashboard.md
+│   ├── gold_tables.md
+│   ├── s3_ingestion.md
+│   └── images/
+│       ├── airflow_pipeline.png
+│       ├── dashboard.png
+│       ├── gold_tables.png
+│       └── s3_ingestion.png
+│
+├── infra/
+│   └── docker-compose.yml
+│
+├── requirements.txt
+├── .env.example
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 📷 Gold Analytics Tables
-
-> Replace this image with your Gold Layer screenshot.
-
-```markdown
-![Gold Tables](doc/images/gold_tables.png)
-```
-
----
-
-## 📷 Airflow Pipeline
-
-> Replace this image with your Airflow DAG screenshot.
-
-```markdown
-![Airflow Pipeline](doc/images/airflow_pipeline.png)
-```
-
----
-
-## 📷 S3 Data Ingestion
-
-> Replace this image with your AWS S3 ingestion screenshot.
-
-```markdown
-![S3 Ingestion](doc/images/s3_ingestion.png)
-```
-
----
-
-## 📊 Gold Layer Tables
-
-### atm_health_summary
-
-Tracks ATM health indicators.
-
-| Column | Description |
-|----------|-------------|
-| atm_id | ATM identifier |
-| city | ATM city |
-| state | ATM state |
-| total_events | Total telemetry events |
-| failure_events | Failure count |
-| high_temperature_events | High temperature occurrences |
-| high_cpu_events | High CPU usage occurrences |
-| low_cash_events | Low cash occurrences |
-
----
-
-### city_failure_summary
-
-Aggregated failures by city.
-
-| Column | Description |
-|----------|-------------|
-| city | City |
-| state | State |
-| total_events | Total events |
-| total_atms | Number of ATMs |
-| failure_events | Failure count |
-
----
-
-### atm_critical_ranking
-
-Ranks the most critical ATMs.
-
-| Column | Description |
-|----------|-------------|
-| atm_id | ATM identifier |
-| failure_events | Failure count |
-| risk_score | Risk indicator |
-
----
-
-## 🎯 Skills Demonstrated
-
-This project demonstrates hands-on experience with:
+## Skills Demonstrated
 
 - Data Engineering
-- Data Lakehouse Architecture
 - Streaming Data Pipelines
 - Apache Kafka
 - Apache Airflow
@@ -387,34 +254,45 @@ This project demonstrates hands-on experience with:
 - Delta Lake
 - PySpark
 - SQL Analytics
+- Data Quality
 - Dashboard Development
-- Data Quality Engineering
-- Cloud Data Platforms
+- Lakehouse Architecture
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - Spark Structured Streaming
-- Predictive Machine Learning Models
+- Machine Learning Failure Prediction
 - CI/CD Pipeline
 - Infrastructure as Code
 - Monitoring and Alerting
-- Automated Data Quality Checks
 
 ---
 
-## 👨‍💻 Author
+## Release
+
+Current Release:
+
+```text
+v1.0.0
+```
+
+Published on GitHub Releases.
+
+---
+
+## Author
 
 ### Igor Elipechuk
 
 Data Engineer | AWS | Databricks | PySpark
 
-**LinkedIn**
+LinkedIn:
 
 https://www.linkedin.com/in/igor-elipechuk
 
-**GitHub**
+GitHub:
 
 https://github.com/ElipechukIgor
 
